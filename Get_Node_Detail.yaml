@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Ansible create file if it doesn't exist example
+    file:
+      path: "/tmp/Nodes_detail.csv"
+      state: touch
+- hosts: server
+  serial: 1
+  tasks:
+  - name: get system detail
+    local_action: lineinfile line="\"{{inventory_hostname}}\" \"{{ ansible_distribution }}\" \"{{ ansible_distribution_version }}\" \"{{ ansible_distribution_release }}\" \"{{ ansible_kernel }}\""  path=/tmp/Nodes_detail.csv
+
